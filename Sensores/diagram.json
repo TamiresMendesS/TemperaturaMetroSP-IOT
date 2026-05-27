@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "author": "Tamires Mendes",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-potentiometer", "id": "pot1", "top": -39.7, "left": 134.2, "attrs": {} }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "pot1:VCC", "esp:3V3", "red", [ "v19.2", "h37.6", "v-96", "h-230.4", "v76.8" ] ],
+    [ "pot1:SIG", "esp:34", "green", [ "v201.6", "h-192.4", "v-163.2" ] ],
+    [ "pot1:GND", "esp:GND.1", "black", [ "v192", "h-172.8", "v-67.2" ] ]
+  ],
+  "dependencies": {}
+}
