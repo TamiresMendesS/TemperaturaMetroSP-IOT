@@ -28,8 +28,8 @@ O desenvolvimento do projeto sucedeu em torno da temperatura ambiente dos vagõe
 ## Circuitos
 
 <div>
-  <img width="465" height="348" alt="Sensores" src="https://github.com/user-attachments/assets/a9dc29de-e159-4e27-8120-6742acd9f880" />
-  <img width="465" height="348" alt="Atuadores" src="https://github.com/user-attachments/assets/e39e6676-3fd5-4ed4-a694-b338d121b95e" />
+  <img width="232" height="174" alt="Sensores" src="https://github.com/user-attachments/assets/a9dc29de-e159-4e27-8120-6742acd9f880" />
+  <img width="232" height="174" alt="Atuadores" src="https://github.com/user-attachments/assets/e39e6676-3fd5-4ed4-a694-b338d121b95e" />
 </div>
 
 ---
