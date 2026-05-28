@@ -1,0 +1,297 @@
+[
+    {
+        "id": "d14ad1c8804bc0c3",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "0b1fc9204d963858",
+        "type": "inject",
+        "z": "d14ad1c8804bc0c3",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 100,
+        "wires": [
+            [
+                "55cfdce165d9b315"
+            ]
+        ]
+    },
+    {
+        "id": "55cfdce165d9b315",
+        "type": "http request",
+        "z": "d14ad1c8804bc0c3",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://api.openweathermap.org/data/2.5/weather?q=Sao%20Paulo,BR&appid=abd0e5c0504faefe6611dba79cc38836&units=metric",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 140,
+        "y": 200,
+        "wires": [
+            [
+                "f132db9b5930a1f4"
+            ]
+        ]
+    },
+    {
+        "id": "47a37b067eba1215",
+        "type": "function",
+        "z": "d14ad1c8804bc0c3",
+        "name": "function 2",
+        "func": "var climaSP = flow.get(\"TemperaturaSP\") || 20; \nvar lotacao = flow.get(\"Lotacao\") || 0;\n\nvar tempVagao = 22 - (lotacao * 0.005) + ((20 - climaSP) * 0.3);\ntempVagao = parseFloat(tempVagao.toFixed(1)); \n\nvar msgInflux = {\n    measurement: \"MonitoramentoMetro\",\n    payload: {\n        temperaturaSP: climaSP,\n        lotacaoPassageiros: lotacao,\n        temperaturaVagao: tempVagao\n    }\n};\n\nmsg.payload = tempVagao; \n\nreturn [msg, msgInflux];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 340,
+        "wires": [
+            [
+                "67271752aec81e62"
+            ],
+            [
+                "10640e152ef847a6"
+            ]
+        ]
+    },
+    {
+        "id": "5c0a5ffe65293861",
+        "type": "comment",
+        "z": "d14ad1c8804bc0c3",
+        "name": "API",
+        "info": "Caminho da API OpenWheather",
+        "x": 90,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "61e618faa0704fdc",
+        "type": "comment",
+        "z": "d14ad1c8804bc0c3",
+        "name": "ESP32 - Sensor",
+        "info": "## Sensores\nEsse ESP32 é responsável por simular a quantidade de pessoas no vagão por meio do potenciometro.",
+        "x": 100,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "6c80fc2b6fd3edc6",
+        "type": "mqtt in",
+        "z": "d14ad1c8804bc0c3",
+        "name": "",
+        "topic": "ProjetoIOT/Lotacao",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "8dc8824ca56fa2cb",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 540,
+        "wires": [
+            [
+                "a5bbf9fec856bb29"
+            ]
+        ]
+    },
+    {
+        "id": "a5bbf9fec856bb29",
+        "type": "function",
+        "z": "d14ad1c8804bc0c3",
+        "name": "function 3",
+        "func": "flow.set(\"Lotacao\", msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 540,
+        "wires": [
+            [
+                "47a37b067eba1215"
+            ]
+        ]
+    },
+    {
+        "id": "f132db9b5930a1f4",
+        "type": "function",
+        "z": "d14ad1c8804bc0c3",
+        "name": "function 4",
+        "func": "flow.set(\"TemperaturaSP\", msg.payload.main.temp); \nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 200,
+        "wires": [
+            [
+                "47a37b067eba1215"
+            ]
+        ]
+    },
+    {
+        "id": "67271752aec81e62",
+        "type": "mqtt out",
+        "z": "d14ad1c8804bc0c3",
+        "name": "",
+        "topic": "ProjetoIOT/TemperaturaVagao",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "8dc8824ca56fa2cb",
+        "x": 750,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "ef2eba13a85726eb",
+        "type": "comment",
+        "z": "d14ad1c8804bc0c3",
+        "name": "ESP32 - Atuador",
+        "info": "",
+        "x": 740,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "b2ede648f0d85a18",
+        "type": "comment",
+        "z": "d14ad1c8804bc0c3",
+        "name": "Valor API - flow",
+        "info": "",
+        "x": 360,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "41ba74ae2fa8d51d",
+        "type": "comment",
+        "z": "d14ad1c8804bc0c3",
+        "name": "Valor lotação - flow",
+        "info": "",
+        "x": 370,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "b61ed08113b921a3",
+        "type": "comment",
+        "z": "d14ad1c8804bc0c3",
+        "name": "Fórmula",
+        "info": "",
+        "x": 520,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "10640e152ef847a6",
+        "type": "influxdb out",
+        "z": "d14ad1c8804bc0c3",
+        "influxdb": "485f826231c3e2c8",
+        "name": "InfluxDB",
+        "measurement": "Dados",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "616b40379a54320e",
+        "bucket": "db_nodered",
+        "x": 680,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "8dc8824ca56fa2cb",
+        "type": "mqtt-broker",
+        "name": "Atvd-04",
+        "broker": "broker.hivemq.com",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "485f826231c3e2c8",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "https://us-east-1-1.aws.cloud2.influxdata.com",
+        "timeout": 10,
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "0a9895601144461a",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-influxdb": "0.7.0"
+        }
+    }
+]
