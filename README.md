@@ -24,6 +24,9 @@ O desenvolvimento do projeto sucedeu em torno da temperatura ambiente dos vagõe
   * Node-RED
 * InfluxDB
 * Grafana
+* Código
+  * JavaScript
+  * C++
 
 ## Circuitos
 
