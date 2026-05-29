@@ -11,6 +11,26 @@ A ideia é fazer uma relação entre a quantidade de passageiros e a temperatura
 
 O desenvolvimento do projeto sucedeu em torno da temperatura ambiente dos vagões do transporte metroferroviário da cidade de São Paulo, uma pauta pouco levantada em torno do conforto no deslocamento durante trajetos realizados no dia-a-dia. Buscamos encontrar uma forma de unir a segurança e o conforto ao cotidiano do passageiro, sem interferir negativamente em sua jornada ao utilizar este meio de transporte. Seguindo a ODS número de 11 “Tornar as cidades e os assentamentos humanos inclusivos, seguros, resilientes e sustentáveis”, a ideia é utilizar sensores que possam monitorar a temperatura atual dos vagões e a adaptar de acordo com a quantidade de pessoas e da situação climática externa, da própria capital.
 
+## Árvore de Arquivos 
+
+├── Atuadores<br>
+│   ├── Atuadores.png<br>
+│   ├── diagram.json<br>
+│   ├── libraries.txt<br>
+│   ├── sketch.ino<br>
+│   └── wokwi-project.txt<br>
+├── Sensores<br>
+│   ├── diagram.json<br>
+│   ├── libraries.txt<br>
+│   ├── Sensores.png<br>
+│   ├── sketch.ino<br>
+│   └── wokwi-project.txt<br>
+├── Dashboard_Grafana.json<br>
+├── Node-RED Fluxo.png<br>
+├── Node-RED_Flows.json<br>
+└── README.md<br>
+
+
 ## Tecnologias Utilizadas
 
 * ESP32 ¹
